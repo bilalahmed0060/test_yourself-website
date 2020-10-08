@@ -1,0 +1,215 @@
+{% load static %}
+{% static "img" as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *Must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>LetUsPrepareYou | Home</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/core-img/favicon.ico' %}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+
+        <!-- Navbar Area -->
+        <div class="clever-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <!-- Menu -->
+                <nav class="classy-navbar justify-content-between" id="cleverNav">
+
+                    <!-- Logo -->
+                    <a class="nav-brand" href="/"><h3>Test Yourself</h3></a>
+
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                    </div>
+
+                    <!-- Menu -->
+                    <div class="classy-menu">
+
+                        <!-- Close Button -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <ul style="padding-right: 300px;">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/about/">About Us</a></li>
+                            </ul>
+
+                             <!-- Register / Login / Logout-->
+
+                            <div class="register-login-area">
+
+                                {% if user.is_authenticated %}
+
+                                    <a href="/accounts/logout/">Logout</a>
+
+                                {% else %}
+
+                                    <a href="/accounts/register/" class="btn">Register</a>
+                                    <a href="/accounts/login/" class="btn active">Login</a>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                        <!-- Nav End -->
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+    <!-- ##### Hero Area Start ##### -->
+    <section class="hero-area bg-img bg-overlay-2by5" style="background-image: url({% static 'img/bg-img/bg1.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+
+                <div class="col-12">
+                    <!-- Hero Content -->
+                    {% if user.is_authenticated %}
+
+                        <div class="hero-content text-center">
+                            <h2>Let Us Prepare You</h2>
+                            <a href="#" class="btn clever-btn">Welcome, Mr {{user.first_name}}  {{user.last_name}}</a>
+                        </div>
+
+                    {% else %}
+
+                        <div class="hero-content text-center">
+                            <h2>Let Us Prepare You</h2>
+                            <a href="/accounts/register/" class="btn clever-btn">Register</a>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    <!-- ##### Hero Area End ##### -->
+
+    <!-- ##### Popular Courses Start ##### -->
+    <section class="popular-courses-area section-padding-100-0" style="background-image: url({% static 'img/core-img/texture.png' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading">
+                        <h3>Catagories</h3>
+                    </div>
+                </div>
+            </div>
+
+
+
+           <div class="row">
+
+                {% for catag in catags %}
+
+                <!-- Single Catagory -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="single-popular-course mb-100 wow fadeInUp" data-wow-delay="250ms">
+                        <img src="{{catag.catagory_image.url}}" alt="">
+                        <!-- Course Content -->
+                        <div class="course-content">
+                            <h4>{{catag.category}}</h4>
+                            <p>{{catag.catagory_explanation}}</p>
+                        </div>
+                        <!-- Exercise Button -->
+                        <div class="seat-rating-fee d-flex justify-content-between">
+                            <div class="course-fee h-100">
+                                <a href="/catagory_exercise/{{catag.category}}/" class="free">Exercise</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Of Single Catagory -->
+
+                {% endfor %}
+
+            </div>
+
+
+
+        </div>
+    </section>
+    <!-- ##### Popular Courses End ##### -->
+
+
+    <!-- ##### Footer Area Start ##### -->
+    <footer class="footer-area">
+        <!-- Top Footer Area -->
+        <div class="top-footer-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Footer Logo -->
+                        <div class="footer-logo">
+                            <a href="index.html"><h3 style="color: #ffffff;">Let Us Prepare you</h3></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Footer Area -->
+        <div class="bottom-footer-area d-flex justify-content-between align-items-center">
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <a href="https://www.facebook.com/mutaher.affan14"><span>Mutaher's Email:</span> Mutaher Affan</a>
+                <a href="#"><span>Bilal's Email:</span> Ahmed Bilal</a>
+            </div>
+            <!-- Follow Us -->
+            <div class="follow-us">
+                <span>Follow us</span>
+                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </footer>
+    <!-- ##### Footer Area End ##### -->
+
+    <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <!-- Popper js -->
+    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
+    <!-- Bootstrap js -->
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <!-- All Plugins js -->
+    <script src="{% static 'js/plugins/plugins.js' %}"></script>
+    <!-- Active js -->
+    <script src="{% static 'js/active.js' %}"></script>
+</body>
+
+</html>

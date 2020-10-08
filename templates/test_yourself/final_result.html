@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>LetUsPrepareYou | Test</title>
+  <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">Test Yourself</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/test/{{catagory}}/{{subcatagory}}">Start Quiz Again</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+
+    <!-- ##### MCQS Heading Start ##### -->
+    <section class="popular-courses-area section-padding-100-0" style="background-image: url({% static 'img/core-img/texture.png' %});">
+        <div class="container" style="padding-bottom:100px">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading row align-items-center justify-content-center">
+                        <h2>Final Result</h2>
+                    </div>
+                </div>
+            </div>
+    <!-- ##### MCQS Heading End ##### -->
+
+    <!-- #### MCQS GETTING USING JINJA TEMPLATE START #### -->
+
+            <div class="card" style="margin-top:40px;">
+                <div class="card-body" style="font-size:20px;">
+                    <div class="container-fluid" style="text-align:center;">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4 style="padding-bottom:20px;">User Selected</h4>
+                                {% for user in user_selected %}
+                                <p>{{user}}<br></p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-lg-6">
+                                <h4 style="padding-bottom:20px;">Correct Answers</h4>
+                                {% for right in right_answer %}
+                                <p>{{right}}<br></p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+            <!-- #### MCQS GETTING USING JINJA TEMPLATE END #### -->
+
+        </div>
+    </section>
+
+            <h5 style="text-align:center;">You Score is : {{score}}</h5>
+    <!-- ##### MCQS Heading End ##### -->
+
+</body>
+</html>

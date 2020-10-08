@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>LetUsPrepareYou | Test</title>
+  <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+        $("#check").click(function(){
+            var $ques = $(".questions");
+            if($ques.find("input:radio:checked").length === $ques.length) {
+                var $myForm = $('#submit');
+                $myForm.submit(function(event){
+                 event.preventDefault();
+                 var $formData = $myForm.serialize();
+                 var $thisURL = $myForm.attr('action') || window.location.href;
+                 $.ajax({
+                 method:'POST',
+                 url: $thisURL,
+                 data: $formData,
+                 success: handleSuccess,
+                 error: handleError,
+                 });
+                 function handleSuccess(data){
+                 console.log(data);
+                 $('html').html(data);
+                 }
+                 function handleError(ThrowError){
+                 console.log(ThrowError)
+                 }
+
+                });
+            }
+            else {
+                alert("Please Select an Answer from all Questions.");
+                $("#submit").submit(function(e) {
+                e.preventDefault();
+                });
+            }
+        });
+    });
+</script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">Test Yourself</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:window.close();">Close Quiz</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br>
+
+    <!-- ##### MCQS Heading Start ##### -->
+    <section class="popular-courses-area section-padding-100-0" style="background-image: url({% static 'img/core-img/texture.png' %});">
+        <div class="container" style="padding-bottom:100px">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-heading row align-items-center justify-content-center">
+                        <h5># {{subcatagory}} Test</h5>
+                    </div>
+                </div>
+            </div>
+    <!-- ##### MCQS Heading End ##### -->
+
+    <!-- #### MCQS GETTING USING JINJA TEMPLATE START #### -->
+
+            <div class="card" style="margin-top:40px;">
+                <div class="card-body" style="font-size:20px;">
+
+                    <form action="/quiz/{{catagory}}/{{subcatagory}}/" id="submit" method="post">
+
+					{% csrf_token %}
+
+                    {% for mcq in  Qu %}
+                        <div class="questions">
+                        <strong>{{forloop.counter}}. {{mcq.content}}</strong>
+
+                        <ul class="list-group" style="margin-top:20px;">
+
+                        {% for ans in mcq.answer_set.all %}
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                <h6 style="float:right;font-size:20px"> <small>
+                                    <span class="badge badge-primary" style="float:left;margin-right:20px;">{{forloop.counter}}</span>
+                                    <!-- Material unchecked -->
+                                    <div class="form-check" style="padding-left:60px;">
+                                    <input type="radio" class="form-check-input" id="answer[{{ ans.content }}]" name="answers[{{ mcq.id }}]" value="{{ ans.content }}">
+                                    <label class="form-check-label" for="answer[{{ ans.content }}]">{{ ans.content }}</label>
+                                    </div>
+                                </small> </h6>
+
+                            </li>
+
+                        {% endfor %} <br>
+
+                        </ul>
+
+
+                        {% for ans in mcq.answer_set.all %}
+                            {% if ans.correct is True %}
+                                <input type="hidden" value="{{ ans.content }}" name="correct_answer[{{ ans }}]">
+                            {% endif %}
+                        {% endfor %}
+
+
+                    {% endfor %}
+                            </div>
+
+                        <button type="submit" class="btn btn-primary" id="check">
+                            Submit Answers ☻
+                        </button>
+
+
+                    </form>
+
+                 </div>
+            </div>
+
+            <!-- #### MCQS GETTING USING JINJA TEMPLATE END #### -->
+
+        </div>
+    </section>
+    <!-- ##### MCQS Heading End ##### -->
+
+</body>
+</html>
